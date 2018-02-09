@@ -1,0 +1,28 @@
+server:
+  port: 8765
+spring:
+  application:
+    name: zuulapp
+zuul:
+  routes:
+    helloapp:
+      path: /helloapp/**
+      serviceId: helloapp
+hystrix:
+  command:
+    helloapp:
+      circuitBreaker:
+        requestVolumeThreshold: 10
+        sleepWindowInMilliseconds: 10000
+      execution:
+        timeout:
+          enable: false
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+ribbon:
+  eureka:
+    enabled: false
+helloapp:
+  ribbon:
+    listOfServers: http://localhost:8080/, http://helloapp.<company>.<domain>.net/
